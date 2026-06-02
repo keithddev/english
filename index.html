@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Practice - Lessons 2-5</title>
+    <title>English Practice - Lessons 2-5 (Upgraded)</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
@@ -18,6 +18,8 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         h2 { color: #667eea; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
         h3 { color: #764ba2; margin: 20px 0 10px; }
+        
+        /* Spelling Game Styles */
         .word-card { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center; }
         .word-display { font-size: 2em; letter-spacing: 10px; margin: 20px 0; font-weight: bold; }
         .letter-buttons { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
@@ -27,19 +29,24 @@
         .current-word { font-size: 1.5em; letter-spacing: 8px; min-height: 50px; margin: 15px 0; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .answer-letter { width: 50px; height: 50px; border: 2px dashed #667eea; border-radius: 10px; background: white; color: #667eea; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: bold; cursor: pointer; transition: all 0.3s; }
         .answer-letter:hover { background: #667eea; color: white; transform: scale(1.1); box-shadow: 0 5px 20px rgba(102,126,234,0.4); }
+        
         .feedback { text-align: center; font-size: 1.3em; margin: 15px 0; min-height: 30px; font-weight: bold; }
         .feedback.correct { color: #27ae60; }
         .feedback.wrong { color: #e74c3c; }
-        .score-board { text-align: center; font-size: 1.2em; margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 10px; }
+        .score-board { text-align: center; font-size: 1.2em; margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 10px; border: 2px dashed #667eea; }
+        
+        /* Fill Blank Styles */
         .sentence-card { background: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid #667eea; }
         .sentence { font-size: 1.2em; line-height: 2; margin: 10px 0; }
         .blank { display: inline-block; min-width: 100px; border: 2px solid #667eea; border-radius: 5px; padding: 5px 10px; text-align: center; font-size: 1em; background: white; }
         .options { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-        .option-btn { padding: 8px 16px; border: 2px solid #667eea; border-radius: 20px; background: white; color: #667eea; cursor: pointer; transition: all 0.3s; }
+        .option-btn { padding: 8px 16px; border: 2px solid #667eea; border-radius: 20px; background: white; color: #667eea; cursor: pointer; transition: all 0.3s; font-size: 1em; }
         .option-btn:hover { background: #667eea; color: white; }
         .option-btn.selected { background: #667eea; color: white; }
         .option-btn.correct { background: #27ae60; border-color: #27ae60; color: white; }
         .option-btn.wrong { background: #e74c3c; border-color: #e74c3c; color: white; }
+        
+        /* SVA Styles */
         .sva-card { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 20px; border-radius: 15px; margin-bottom: 15px; }
         .sva-sentence { font-size: 1.2em; line-height: 2; margin: 10px 0; }
         .sva-blank { display: inline-block; min-width: 100px; border: 2px dashed #667eea; border-radius: 5px; padding: 5px 10px; text-align: center; font-size: 1em; background: white; color: #667eea; font-weight: bold; margin: 0 5px; }
@@ -47,52 +54,99 @@
         .verb-options { display: flex; gap: 15px; margin-top: 15px; }
         .verb-btn { padding: 12px 25px; border: 3px solid #667eea; border-radius: 25px; background: white; color: #667eea; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: all 0.3s; }
         .verb-btn:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(102,126,234,0.3); }
+        .verb-btn.selected { background: #667eea; color: white; }
         .verb-btn.correct { background: #27ae60; border-color: #27ae60; color: white; }
         .verb-btn.wrong { background: #e74c3c; border-color: #e74c3c; color: white; }
+        
         .rule-tip { background: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; font-size: 0.95em; }
         .rule-tip strong { color: #856404; }
+        
+        /* Buttons */
         .check-btn { display: block; width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 20px; transition: all 0.3s; }
         .check-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
         .reset-btn { display: block; width: 100%; padding: 12px; background: #6c757d; color: white; border: none; border-radius: 10px; font-size: 1em; cursor: pointer; margin-top: 10px; transition: all 0.3s; }
         .reset-btn:hover { background: #5a6268; }
+        .action-btn { background-color: #32cd32; color: white; box-shadow: 0 5px 0 #228b22; display: block; width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 15px; transition: all 0.1s; }
+        .action-btn:active { transform: translateY(5px); box-shadow: 0 0 0 #228b22; }
+        .retry-action-btn { background-color: #ff8c00; box-shadow: 0 5px 0 #cc7000; }
+        .retry-action-btn:active { transform: translateY(5px); box-shadow: 0 0 0 #cc7000; }
+        
         .progress-container { background: #e9ecef; border-radius: 10px; height: 20px; overflow: hidden; margin: 15px 0; }
         .progress-bar { height: 100%; background: linear-gradient(90deg, #27ae60, #2ecc71); transition: width 0.5s; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8em; font-weight: bold; }
-        .retry-btn { display: none; margin-top: 10px; padding: 10px; background: #ffc107; color: #333; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .retry-btn:hover { background: #ffb300; }
+        
+        /* End Screen & Summary */
+        .end-screen { display: none; margin-top: 20px; }
+        .end-title { text-align: center; color: #ff69b4; font-size: 2em; margin-bottom: 10px; }
+        .mistake-list { text-align: left; background: #fff0f5; padding: 15px; border-radius: 10px; margin-top: 20px; border: 2px dashed #ffb6c1; }
+        .mistake-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ccc; font-size: 1.1em; }
+        .speak-btn { background-color: #ffd700; color: #b8860b; border: 2px solid #daa520; padding: 5px 10px; font-size: 14px; border-radius: 15px; cursor: pointer; font-weight: bold; margin-left: 10px; }
+        
     </style>
 </head>
 <body>
     <div class="container">
         <h1>📚 English Practice</h1>
         <p class="subtitle">Lessons 2-5: Good Boys & Girls, Busy Days, My Day, Favourite Festivals</p>
+        
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showSection('spelling')">🔤 Spelling Game</button>
             <button class="nav-tab" onclick="showSection('fillblank')">📝 Fill in the Blanks</button>
             <button class="nav-tab" onclick="showSection('subjectverb')">✅ He/She/It/They + Verb</button>
         </div>
+
+        <!-- 1. Spelling Game Section -->
         <div id="spelling" class="section active">
             <h2>🔤 Spelling Game</h2>
-            <div class="word-card">
-                <p>Spell the word correctly!</p>
-                <div class="word-display" id="targetWord">_ _ _ _ _</div>
-                <div class="current-word" id="currentSpelling"></div>
-                <div class="feedback" id="spellingFeedback"></div>
-                <div class="letter-buttons" id="letterButtons"></div>
-                <button class="retry-btn" id="retryBtn" onclick="retryCurrentWord()">🔄 Retry This Word</button>
+            
+            <div id="spelling-play">
+                <div class="word-card">
+                    <p>Spell the word correctly!</p>
+                    <div class="word-display" id="targetWord">_ _ _ _ _</div>
+                    <div class="current-word" id="currentSpelling"></div>
+                    <div class="feedback" id="spellingFeedback"></div>
+                    <div class="letter-buttons" id="letterButtons"></div>
+                </div>
+                <div class="score-board">
+                    Score: <span id="score">0</span> / <span id="totalWords">0</span>
+                    <div class="progress-container"><div class="progress-bar" id="progressBar" style="width: 0%"></div></div>
+                </div>
+                <button class="check-btn" onclick="checkSpelling()">Check Answer</button>
+                <button class="reset-btn" onclick="initSpellingGame(false)">Restart Game</button>
             </div>
-            <div class="score-board">
-                Score: <span id="score">0</span> / <span id="totalWords">0</span>
-                <div class="progress-container"><div class="progress-bar" id="progressBar" style="width: 0%"></div></div>
+
+            <div id="spelling-end" class="end-screen">
+                <h2 class="end-title">🎉 Game Over! 🎉</h2>
+                <div class="score-board">
+                    Final Score: <span id="spelling-final-score"></span> / <span id="spelling-final-total"></span>
+                </div>
+                <div id="spelling-summary"></div>
+                <button id="spelling-retry-btn" class="action-btn retry-action-btn" onclick="initSpellingGame(true)">🎯 Redo Wrong Questions</button>
+                <button class="action-btn" onclick="initSpellingGame(false)">🔄 Play All Again</button>
             </div>
-            <button class="check-btn" onclick="checkSpelling()">Check Answer</button>
-            <button class="reset-btn" onclick="resetSpellingGame()">Restart Game</button>
         </div>
+
+        <!-- 2. Fill in the Blanks Section -->
         <div id="fillblank" class="section">
             <h2>📝 Fill in the Blanks</h2>
-            <div id="fillBlankQuestions"></div>
-            <button class="check-btn" onclick="checkFillBlanks()">Check All Answers</button>
-            <button class="reset-btn" onclick="resetFillBlanks()">Reset</button>
+            
+            <div id="fb-play">
+                <div id="fillBlankQuestions"></div>
+                <button class="check-btn" onclick="checkFillBlanks()">Check All Answers</button>
+                <button class="reset-btn" onclick="initFillBlanks(false)">Restart Game</button>
+            </div>
+
+            <div id="fb-end" class="end-screen">
+                <h2 class="end-title">🎉 Game Over! 🎉</h2>
+                <div class="score-board">
+                    Final Score: <span id="fb-final-score"></span> / <span id="fb-final-total"></span>
+                </div>
+                <div id="fb-summary"></div>
+                <button id="fb-retry-btn" class="action-btn retry-action-btn" onclick="initFillBlanks(true)">🎯 Redo Wrong Questions</button>
+                <button class="action-btn" onclick="initFillBlanks(false)">🔄 Play All Again</button>
+            </div>
         </div>
+
+        <!-- 3. Subject Verb Section -->
         <div id="subjectverb" class="section">
             <h2>✅ He/She/It/They + Verb (加 s 練習)</h2>
             <div class="rule-tip">
@@ -100,20 +154,51 @@
                 • <strong>He / She / It</strong> + verb<strong>s</strong> (要加 s)<br>
                 • <strong>I / You / We / They</strong> + verb (唔加 s)
             </div>
-            <h3>Practice Sentences</h3>
-            <div id="svaQuestions"></div>
-            <button class="check-btn" onclick="checkSVA()">Check All Answers</button>
-            <button class="reset-btn" onclick="resetSVA()">Reset</button>
+            
+            <div id="sva-play">
+                <div id="svaQuestions"></div>
+                <button class="check-btn" onclick="checkSVA()">Check All Answers</button>
+                <button class="reset-btn" onclick="initSVA(false)">Restart Game</button>
+            </div>
+
+            <div id="sva-end" class="end-screen">
+                <h2 class="end-title">🎉 Game Over! 🎉</h2>
+                <div class="score-board">
+                    Final Score: <span id="sva-final-score"></span> / <span id="sva-final-total"></span>
+                </div>
+                <div id="sva-summary"></div>
+                <button id="sva-retry-btn" class="action-btn retry-action-btn" onclick="initSVA(true)">🎯 Redo Wrong Questions</button>
+                <button class="action-btn" onclick="initSVA(false)">🔄 Play All Again</button>
+            </div>
         </div>
     </div>
+
     <script>
+        // --- Global TTS Function ---
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let msg = new SpeechSynthesisUtterance(text);
+                msg.lang = 'en-GB'; 
+                msg.rate = 0.9;
+                window.speechSynthesis.speak(msg);
+            }
+        }
+        function playCorrectSound() { speakText("Correct!"); }
+        function playWrongSound() { speakText("Oops, try again!"); }
+        function playPerfectSound() { speakText("Perfect! Well done!"); }
+
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             event.target.classList.add('active');
         }
-        const spellingWords = [
+
+        // ==========================================
+        // 1. SPELLING GAME
+        // ==========================================
+        const allSpellingWords = [
             { word: 'tidy', meaning: '整潔的' }, { word: 'untidy', meaning: '不整潔的' },
             { word: 'honest', meaning: '誠實的' }, { word: 'polite', meaning: '有禮貌的' },
             { word: 'lazy', meaning: '懶惰的' }, { word: 'study', meaning: '學習' },
@@ -127,49 +212,67 @@
             { word: 'festival', meaning: '節日' }, { word: 'present', meaning: '禮物' },
             { word: 'fireworks', meaning: '煙火' }
         ];
-        let currentWordIndex = 0, currentSpelling = [], spellingScore = 0, wrongAttempts = 0;
-        function initSpellingGame() {
-            currentWordIndex = 0; currentSpelling = []; spellingScore = 0; wrongAttempts = 0;
-            document.getElementById('totalWords').textContent = spellingWords.length;
-            updateScore(); loadNextWord();
+        
+        let spellingWordsToPlay = [];
+        let mistakeLogSpelling = [];
+        let currentWordIndex = 0, currentSpelling = [], spellingScore = 0;
+        let currentWordMistakeLogged = false;
+
+        function initSpellingGame(isRetry = false) {
+            if (isRetry && mistakeLogSpelling.length > 0) {
+                spellingWordsToPlay = [...mistakeLogSpelling];
+            } else {
+                spellingWordsToPlay = [...allSpellingWords];
+            }
+            mistakeLogSpelling = [];
+            currentWordIndex = 0;
+            currentSpelling = [];
+            spellingScore = 0;
+            
+            document.getElementById('spelling-play').style.display = 'block';
+            document.getElementById('spelling-end').style.display = 'none';
+            document.getElementById('totalWords').textContent = spellingWordsToPlay.length;
+            
+            updateScoreSpelling(); 
+            loadNextWordSpelling();
         }
-        function loadNextWord() {
-            if (currentWordIndex >= spellingWords.length) {
-                document.getElementById('targetWord').textContent = '🎉 Complete!';
-                document.getElementById('spellingFeedback').textContent = 'Final Score: ' + spellingScore + '/' + spellingWords.length;
-                document.getElementById('letterButtons').innerHTML = '';
-                document.getElementById('retryBtn').style.display = 'none';
+
+        function loadNextWordSpelling() {
+            if (currentWordIndex >= spellingWordsToPlay.length) {
+                endSpellingGame();
                 return;
             }
-            const wordObj = spellingWords[currentWordIndex];
+            currentWordMistakeLogged = false;
+            const wordObj = spellingWordsToPlay[currentWordIndex];
             document.getElementById('targetWord').textContent = wordObj.meaning + ' (' + wordObj.word.length + ' letters)';
-            document.getElementById('currentSpelling').textContent = '';
+            document.getElementById('currentSpelling').innerHTML = '';
             document.getElementById('spellingFeedback').textContent = '';
-            document.getElementById('retryBtn').style.display = 'none';
+            
             currentSpelling = [];
-            wrongAttempts = 0;
             const letters = wordObj.word.split('').sort(() => Math.random() - 0.5);
             const letterButtonsDiv = document.getElementById('letterButtons');
             letterButtonsDiv.innerHTML = '';
             letters.forEach((letter, idx) => {
                 const btn = document.createElement('button');
                 btn.className = 'letter-btn'; btn.textContent = letter;
-                btn.onclick = () => useLetter(letter, idx);
+                btn.onclick = () => useLetterSpelling(letter, idx);
                 letterButtonsDiv.appendChild(btn);
             });
         }
-        function useLetter(letter, letterIdx) {
+
+        function useLetterSpelling(letter, letterIdx) {
             const btns = document.querySelectorAll('.letter-btn');
             if (btns[letterIdx].classList.contains('used')) return;
             btns[letterIdx].classList.add('used');
             currentSpelling.push(letter);
-            updateCurrentSpelling();
+            updateCurrentSpellingDisplay();
         }
-        function removeLetter(index) {
+
+        function removeLetterSpelling(index) {
             if (index >= currentSpelling.length) return;
             const letter = currentSpelling[index];
             currentSpelling.splice(index, 1);
-            updateCurrentSpelling();
+            updateCurrentSpellingDisplay();
             const btns = document.querySelectorAll('.letter-btn');
             for (let i = 0; i < btns.length; i++) {
                 if (btns[i].textContent === letter && btns[i].classList.contains('used')) {
@@ -178,45 +281,84 @@
                 }
             }
         }
-        function updateCurrentSpelling() {
+
+        function updateCurrentSpellingDisplay() {
             const display = document.getElementById('currentSpelling');
             display.innerHTML = '';
             currentSpelling.forEach((letter, idx) => {
                 const span = document.createElement('span');
                 span.className = 'answer-letter';
                 span.textContent = letter;
-                span.onclick = (e) => { e.stopPropagation(); removeLetter(idx); };
+                span.onclick = (e) => { e.stopPropagation(); removeLetterSpelling(idx); };
                 display.appendChild(span);
             });
         }
+
         function checkSpelling() {
-            const targetWord = spellingWords[currentWordIndex].word;
+            const targetObj = spellingWordsToPlay[currentWordIndex];
+            const targetWord = targetObj.word;
             const spelledWord = currentSpelling.join('');
+            
             if (spelledWord === targetWord) {
+                playCorrectSound();
                 document.getElementById('spellingFeedback').textContent = '✓ Correct! ' + targetWord;
                 document.getElementById('spellingFeedback').className = 'feedback correct';
-                spellingScore++; updateScore();
-                setTimeout(() => { currentWordIndex++; currentSpelling = []; loadNextWord(); }, 1000);
+                if (!currentWordMistakeLogged) { spellingScore++; }
+                updateScoreSpelling();
+                setTimeout(() => { currentWordIndex++; loadNextWordSpelling(); }, 1000);
             } else {
-                wrongAttempts++;
-                document.getElementById('spellingFeedback').textContent = '✗ Try again! (Attempt ' + wrongAttempts + ')';
+                playWrongSound();
+                document.getElementById('spellingFeedback').textContent = '✗ Try again!';
                 document.getElementById('spellingFeedback').className = 'feedback wrong';
-                if (wrongAttempts >= 3) {
-                    document.getElementById('retryBtn').style.display = 'inline-block';
+                if (!currentWordMistakeLogged) {
+                    mistakeLogSpelling.push(targetObj);
+                    currentWordMistakeLogged = true;
                 }
             }
         }
-        function retryCurrentWord() {
-            loadNextWord();
-        }
-        function updateScore() {
+
+        function updateScoreSpelling() {
             document.getElementById('score').textContent = spellingScore;
-            const progress = (currentWordIndex / spellingWords.length) * 100;
+            const progress = (currentWordIndex / spellingWordsToPlay.length) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
             document.getElementById('progressBar').textContent = Math.round(progress) + '%';
         }
-        function resetSpellingGame() { initSpellingGame(); }
-        const fillBlankQuestions = [
+
+        function endSpellingGame() {
+            document.getElementById('spelling-play').style.display = 'none';
+            document.getElementById('spelling-end').style.display = 'block';
+            document.getElementById('spelling-final-score').textContent = spellingScore;
+            document.getElementById('spelling-final-total').textContent = spellingWordsToPlay.length;
+
+            const summaryDiv = document.getElementById('spelling-summary');
+            const retryBtn = document.getElementById('spelling-retry-btn');
+            
+            if (mistakeLogSpelling.length === 0) {
+                playPerfectSound();
+                summaryDiv.innerHTML = "<h3>🌟 Perfect! You spelled everything correctly! 🌟</h3>";
+                retryBtn.style.display = 'none';
+            } else {
+                speakText(`You scored ${spellingScore} out of ${spellingWordsToPlay.length}. Review your mistakes.`);
+                let html = "<h3>📖 Mistake Review:</h3><div class='mistake-list'>";
+                mistakeLogSpelling.forEach((item, idx) => {
+                    html += `
+                        <div class="mistake-item">
+                            <b>${item.meaning}</b> = <span style="color:#e74c3c; font-weight:bold;">${item.word}</span>
+                            <button class="speak-btn" onclick="speakText('${item.word}')">🔊 Listen</button>
+                        </div>
+                    `;
+                });
+                html += "</div>";
+                summaryDiv.innerHTML = html;
+                retryBtn.style.display = 'block';
+            }
+        }
+
+
+        // ==========================================
+        // 2. FILL IN THE BLANKS GAME
+        // ==========================================
+        const allFillBlankQuestions = [
             { sentence: 'Eric _____ his room every week.', options: ['tidy', 'tidies', 'tidying'], answer: 1 },
             { sentence: 'Kelly _____ every day.', options: ['study', 'studies', 'studys'], answer: 1 },
             { sentence: 'Ken _____ the dishes every day.', options: ['wash', 'washes', 'washs'], answer: 1 },
@@ -230,10 +372,28 @@
             { sentence: 'I like watching _____ at Chinese New Year.', options: ['firework', 'fireworks', 'a firework'], answer: 1 },
             { sentence: 'I _____ red packets at Chinese New Year.', options: ['get', 'gets', 'getting'], answer: 0 }
         ];
+
+        let fbQuestionsToPlay = [];
+        let mistakeLogFB = [];
         let fillBlankAnswers = {};
-        function initFillBlanks() {
-            const container = document.getElementById('fillBlankQuestions'); container.innerHTML = '';
-            fillBlankQuestions.forEach((q, idx) => {
+
+        function initFillBlanks(isRetry = false) {
+            if (isRetry && mistakeLogFB.length > 0) {
+                // BUG FIX: .map(m => m.question) added here to correctly load the question objects!
+                fbQuestionsToPlay = [...mistakeLogFB.map(m => m.question)];
+            } else {
+                fbQuestionsToPlay = [...allFillBlankQuestions];
+            }
+            mistakeLogFB = [];
+            fillBlankAnswers = {};
+            
+            document.getElementById('fb-play').style.display = 'block';
+            document.getElementById('fb-end').style.display = 'none';
+            
+            const container = document.getElementById('fillBlankQuestions'); 
+            container.innerHTML = '';
+            
+            fbQuestionsToPlay.forEach((q, idx) => {
                 const card = document.createElement('div'); card.className = 'sentence-card';
                 const sentenceDiv = document.createElement('div'); sentenceDiv.className = 'sentence';
                 sentenceDiv.innerHTML = q.sentence.replace('_____', '<span class="blank" id="blank' + idx + '">?</span>');
@@ -246,32 +406,68 @@
                 card.appendChild(sentenceDiv); card.appendChild(optionsDiv); container.appendChild(card);
             });
         }
+
         function selectFillBlankAnswer(qIdx, optIdx, btn) {
             fillBlankAnswers[qIdx] = optIdx;
             const blankSpan = document.getElementById('blank' + qIdx);
             if (blankSpan) {
-                blankSpan.textContent = fillBlankQuestions[qIdx].options[optIdx];
+                blankSpan.textContent = fbQuestionsToPlay[qIdx].options[optIdx];
             }
             const parent = btn.parentElement;
             parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected', 'correct', 'wrong'));
             btn.classList.add('selected');
+            speakText(fbQuestionsToPlay[qIdx].options[optIdx]);
         }
+
         function checkFillBlanks() {
             let correctCount = 0;
-            fillBlankQuestions.forEach((q, idx) => {
+            fbQuestionsToPlay.forEach((q, idx) => {
                 const userAnswer = fillBlankAnswers[idx];
-                const blankSpan = document.getElementById('blank' + idx);
-                if (!blankSpan) return;
-                const parent = blankSpan.parentElement.parentElement;
-                const buttons = parent.querySelectorAll('.option-btn');
-                buttons.forEach(b => b.classList.remove('correct', 'wrong'));
-                if (userAnswer === q.answer) { correctCount++; buttons[userAnswer].classList.add('correct'); blankSpan.style.backgroundColor = '#d4edda'; }
-                else if (userAnswer !== undefined) { buttons[userAnswer].classList.add('wrong'); blankSpan.style.backgroundColor = '#f8d7da'; }
+                if (userAnswer === q.answer) { 
+                    correctCount++; 
+                } else { 
+                    mistakeLogFB.push({ question: q, wrongSelected: userAnswer !== undefined ? q.options[userAnswer] : 'No Answer' }); 
+                }
             });
-            alert('You got ' + correctCount + '/' + fillBlankQuestions.length + ' correct!');
+
+            document.getElementById('fb-play').style.display = 'none';
+            document.getElementById('fb-end').style.display = 'block';
+            document.getElementById('fb-final-score').textContent = correctCount;
+            document.getElementById('fb-final-total').textContent = fbQuestionsToPlay.length;
+
+            const summaryDiv = document.getElementById('fb-summary');
+            const retryBtn = document.getElementById('fb-retry-btn');
+            
+            if (mistakeLogFB.length === 0) {
+                playPerfectSound();
+                summaryDiv.innerHTML = "<h3>🌟 Perfect! You got all sentences correct! 🌟</h3>";
+                retryBtn.style.display = 'none';
+            } else {
+                speakText(`You scored ${correctCount} out of ${fbQuestionsToPlay.length}. Review your mistakes.`);
+                let html = "<h3>📖 Mistake Review:</h3><div class='mistake-list'>";
+                mistakeLogFB.forEach((item, idx) => {
+                    const q = item.question;
+                    const correctAns = q.options[q.answer];
+                    const fullSentence = q.sentence.replace('_____', correctAns);
+                    html += `
+                        <div class="mistake-item">
+                            ${q.sentence.replace('_____', `<u style="color:#e74c3c;"><b>${correctAns}</b></u>`)}
+                            <br><span style='color:gray; font-size:0.9em;'>(You selected: ${item.wrongSelected})</span>
+                            <button class="speak-btn" onclick="speakText('${fullSentence}')">🔊 Listen</button>
+                        </div>
+                    `;
+                });
+                html += "</div>";
+                summaryDiv.innerHTML = html;
+                retryBtn.style.display = 'block';
+            }
         }
-        function resetFillBlanks() { fillBlankAnswers = {}; initFillBlanks(); }
-        const svaQuestions = [
+
+
+        // ==========================================
+        // 3. SUBJECT + VERB GAME
+        // ==========================================
+        const allSvaQuestions = [
             { subject: 'He', verb: 'wash', sentence: '_____ the dishes every day.' },
             { subject: 'She', verb: 'tidy', sentence: '_____ her room every week.' },
             { subject: 'It', verb: 'rain', sentence: '_____ every day in April.' },
@@ -285,26 +481,47 @@
             { subject: 'They', verb: 'visit', sentence: '_____ their grandparents on Sundays.' },
             { subject: 'My brother', verb: 'brush', sentence: '_____ his teeth twice a day.' }
         ];
+
+        let svaQuestionsToPlay = [];
+        let mistakeLogSVA = [];
         let svaAnswers = {};
+
         function addSToVerb(verb) {
             if (verb.endsWith('sh') || verb.endsWith('ch') || verb.endsWith('x') || verb.endsWith('o') || verb.endsWith('ss')) return verb + 'es';
             else if (verb.endsWith('y') && !'aeiou'.includes(verb.slice(-2, -1))) return verb.slice(0, -1) + 'ies';
             else return verb + 's';
         }
-        function initSVA() {
-            const container = document.getElementById('svaQuestions'); container.innerHTML = '';
-            svaQuestions.forEach((q, idx) => {
+
+        function initSVA(isRetry = false) {
+            if (isRetry && mistakeLogSVA.length > 0) {
+                svaQuestionsToPlay = [...mistakeLogSVA.map(m => m.question)];
+            } else {
+                svaQuestionsToPlay = [...allSvaQuestions];
+            }
+            mistakeLogSVA = [];
+            svaAnswers = {};
+
+            document.getElementById('sva-play').style.display = 'block';
+            document.getElementById('sva-end').style.display = 'none';
+            
+            const container = document.getElementById('svaQuestions'); 
+            container.innerHTML = '';
+            
+            svaQuestionsToPlay.forEach((q, idx) => {
                 const card = document.createElement('div'); card.className = 'sva-card';
                 const subjectBox = document.createElement('span'); subjectBox.className = 'subject-box'; subjectBox.textContent = q.subject;
                 const sentenceText = document.createElement('span'); sentenceText.className = 'sva-sentence';
+                
                 const beforeBlank = q.sentence.split('_____')[0];
                 const afterBlank = q.sentence.split('_____')[1] || '';
                 sentenceText.innerHTML = beforeBlank + '<span class="sva-blank" id="sva-blank' + idx + '">?</span>' + afterBlank;
+                
                 const verbOptionsDiv = document.createElement('div'); verbOptionsDiv.className = 'verb-options';
                 const needsS = ['He', 'She', 'It', 'Mike', 'The cat', 'My brother'].includes(q.subject);
                 const correctVerb = needsS ? addSToVerb(q.verb) : q.verb;
                 const wrongVerb = needsS ? q.verb : addSToVerb(q.verb);
                 const verbs = Math.random() > 0.5 ? [correctVerb, wrongVerb] : [wrongVerb, correctVerb];
+                
                 verbs.forEach(function(v) {
                     const btn = document.createElement('button'); btn.className = 'verb-btn'; btn.textContent = v;
                     btn.onclick = function() { selectSVAAnswer(idx, v, btn, correctVerb); };
@@ -313,6 +530,7 @@
                 card.appendChild(subjectBox); card.appendChild(sentenceText); card.appendChild(verbOptionsDiv); container.appendChild(card);
             });
         }
+
         function selectSVAAnswer(qIdx, selectedVerb, btn, correctVerb) {
             svaAnswers[qIdx] = selectedVerb;
             const blankSpan = document.getElementById('sva-blank' + qIdx);
@@ -322,25 +540,61 @@
             const parent = btn.parentElement;
             parent.querySelectorAll('.verb-btn').forEach(b => b.classList.remove('selected', 'correct', 'wrong'));
             btn.classList.add('selected');
-            btn.style.background = '#667eea';
-            btn.style.color = 'white';
+            speakText(selectedVerb);
         }
+
         function checkSVA() {
             let correctCount = 0;
-            svaQuestions.forEach((q, idx) => {
+            svaQuestionsToPlay.forEach((q, idx) => {
                 const userAnswer = svaAnswers[idx];
-                const card = document.querySelectorAll('.sva-card')[idx];
-                const buttons = card.querySelectorAll('.verb-btn');
-                buttons.forEach(b => b.classList.remove('correct', 'wrong'));
                 const needsS = ['He', 'She', 'It', 'Mike', 'The cat', 'My brother'].includes(q.subject);
                 const correctVerb = needsS ? addSToVerb(q.verb) : q.verb;
-                if (userAnswer === correctVerb) { correctCount++; buttons.forEach(b => { if (b.textContent === correctVerb) b.classList.add('correct'); }); card.style.borderLeft = '5px solid #27ae60'; }
-                else if (userAnswer !== undefined) { buttons.forEach(b => { if (b.textContent === userAnswer) b.classList.add('wrong'); if (b.textContent === correctVerb) b.classList.add('correct'); }); card.style.borderLeft = '5px solid #e74c3c'; }
+                
+                if (userAnswer === correctVerb) { 
+                    correctCount++; 
+                } else { 
+                    mistakeLogSVA.push({ question: q, correctVerb: correctVerb, wrongSelected: userAnswer || 'No Answer' }); 
+                }
             });
-            alert('You got ' + correctCount + '/' + svaQuestions.length + ' correct!\n\nRemember: He/She/It + verb-s (加 s)');
+
+            document.getElementById('sva-play').style.display = 'none';
+            document.getElementById('sva-end').style.display = 'block';
+            document.getElementById('sva-final-score').textContent = correctCount;
+            document.getElementById('sva-final-total').textContent = svaQuestionsToPlay.length;
+
+            const summaryDiv = document.getElementById('sva-summary');
+            const retryBtn = document.getElementById('sva-retry-btn');
+            
+            if (mistakeLogSVA.length === 0) {
+                playPerfectSound();
+                summaryDiv.innerHTML = "<h3>🌟 Perfect! You got all verbs correct! 🌟</h3>";
+                retryBtn.style.display = 'none';
+            } else {
+                speakText(`You scored ${correctCount} out of ${svaQuestionsToPlay.length}. Review your mistakes.`);
+                let html = "<h3>📖 Mistake Review:</h3><div class='mistake-list'>";
+                mistakeLogSVA.forEach((item, idx) => {
+                    const q = item.question;
+                    const fullSentence = `${q.subject} ${item.correctVerb} ${q.sentence.replace('_____', '').trim()}`;
+                    html += `
+                        <div class="mistake-item">
+                            <b>${q.subject}</b> <u style="color:#e74c3c; font-weight:bold;">${item.correctVerb}</u> ${q.sentence.replace('_____', '')}
+                            <br><span style='color:gray; font-size:0.9em;'>(You selected: ${item.wrongSelected})</span>
+                            <button class="speak-btn" onclick="speakText('${fullSentence}')">🔊 Listen</button>
+                        </div>
+                    `;
+                });
+                html += "</div>";
+                summaryDiv.innerHTML = html;
+                retryBtn.style.display = 'block';
+            }
         }
-        function resetSVA() { svaAnswers = {}; initSVA(); }
-        window.onload = function() { initSpellingGame(); initFillBlanks(); initSVA(); };
+
+        // Initialize all games on load
+        window.onload = function() { 
+            initSpellingGame(false); 
+            initFillBlanks(false); 
+            initSVA(false); 
+        };
     </script>
 </body>
 </html>
